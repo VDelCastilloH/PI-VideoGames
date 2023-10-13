@@ -11,23 +11,23 @@ module.exports = (sequelize) => {
       // autoIncrement: true,
       primaryKey: true
     },
-    nombre: {
+    name: {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    descripcion: {
+    description: {
       type: DataTypes.TEXT,
       allowNull: true,
     },
-    plataformas: {
+    platforms: {
       type: DataTypes.ARRAY(DataTypes.STRING),
       allowNull: false,
     },
-    imagen: {
+    image: {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    fecha_lanzamiento: {
+    released: {
       type: DataTypes.STRING,
       allowNull: false,
     },
