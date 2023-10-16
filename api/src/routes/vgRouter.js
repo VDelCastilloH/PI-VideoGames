@@ -8,6 +8,6 @@ const vgRouter = Router();
 
 vgRouter.get('/', getVideoGamesHandler);
 vgRouter.get('/:id', getVideoGameIdHandler);
-//vgRouter.post('/',createVideoGameHandler);
+vgRouter.post('/', createVideoGameHandler);
 
 module.exports = vgRouter;

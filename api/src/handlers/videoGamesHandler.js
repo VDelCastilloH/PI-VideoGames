@@ -1,5 +1,6 @@
 const { getAllVideogames, 
-        getVideogameById } = require('../controllers/videoGamesController');
+        getVideogameById,
+        postVideoGameDb } = require('../controllers/videoGamesController');
 
 const getVideoGamesHandler = async (req,res) => {
     const {name} = req.query;
@@ -13,7 +14,7 @@ const getVideoGamesHandler = async (req,res) => {
             
             vgName.length 
                 ? res.status(200).json(vgName.slice(0,15)) 
-                : res.status(400).send('Juego no encontrado');
+                : res.status(400).send('Videojuego no encontrado');
         }
 
     } catch (error) {
@@ -32,7 +33,34 @@ const getVideoGameIdHandler = async (req,res) => {
     }
 }
 
+const createVideoGameHandler = async (req,res) =>{
+    const { name, 
+            description, 
+            platforms, 
+            image, 
+            released, 
+            rating, 
+            genres } = req.body;
+    try {
+        const newVg = await postVideoGameDb(name, 
+            description, 
+            platforms, 
+            image, 
+            released, 
+            rating, 
+            genres);
+        if(!newVg.error){
+            res.status(200).json(newVg);
+        } else {
+            res.status(400).json(newVg);
+        }
+    } catch (error) {
+        res.status(400).json({error: error.message});
+    }
+}
+
 module.exports = {
     getVideoGamesHandler,
     getVideoGameIdHandler,
+    createVideoGameHandler,
 }

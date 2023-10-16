@@ -62,33 +62,67 @@ const getAllVideogames = async () =>{
 }
 
 const getVideogameById = async (id,source) =>{
-    if(source === 'api'){
-        const response = await axios.get(`${URL_BASE_GAMES}/${id}?key=${API_KEY}`)
-        return { 
-                id: response.data.id,
-                name:response.data.name,
-                description: response.data.description_raw,
-                platforms: response.data.platforms.map((pf)=>pf.platform.name),
-                image: response.data.background_image,
-                released: response.data.released,
-                rating: response.data.rating,
-                genres: response.data.genres? response.data.genres.map((ge)=>ge.name) : "Sin Genero"
+    try {
+        if(source === 'api'){
+            const response = await axios.get(`${URL_BASE_GAMES}/${id}?key=${API_KEY}`)
+            return { 
+                    id: response.data.id,
+                    name:response.data.name,
+                    description: response.data.description_raw,
+                    platforms: response.data.platforms.map((pf)=>pf.platform.name),
+                    image: response.data.background_image,
+                    released: response.data.released,
+                    rating: response.data.rating,
+                    genres: response.data.genres? response.data.genres.map((ge)=>ge.name) : "Sin Genero"
+                }
+        } else {
+            if (source === 'bdd')
+            {   
+                const response = await Videogame.findByPk(id,{
+                    include:[{
+                        model:Genre,
+                        attributes:["name"],
+                        through: {
+                            attributes: []
+                        }
+                    }]
+                });
+                return response;
             }
-    } else {
-        if (source === 'bdd')
-        {   
-            const response = await Videogame.findByPk(id,{
-                include:[{
-                    model:Genre,
-                    attributes:["name"],
-                    through: {
-                        attributes: []
-                    }
-                }]
-            });
-            return response;
-        }
-    }   
+        }   
+    } catch (error) {
+        return {error: error.message};
+    }
 }
 
-module.exports = {getAllVideogames,getVideogameById}
+const postVideoGameDb = async (name, description, platforms, image, released, rating, genres) => {
+    try {
+        if(name){
+            const allVg = await getAllVideogames();
+            const vgFound = allVg.find((vg)=>vg.name.toUpperCase()===name.toUpperCase())
+            if(!vgFound){
+                const newVg = await Videogame.create(
+                    {
+                        name, 
+                        description, 
+                        platforms, 
+                        image, 
+                        released, 
+                        rating
+                    });
+                    //console.log(`El genero es: ${dbGen[0].dataValues.name}`);
+                const dbGen = await Genre.findAll({where:{name:genres}})
+                await newVg.addGenre(dbGen);
+                return newVg;
+            } else {
+                return { error: `Un Videojuego con el nombre: ${name} ya existe en la Base de Datos` }
+            }
+        } else {
+            return { error: `El Videojuego debe que tener un nombre` }
+        }
+    } catch (error) {
+        return {error: error.message};
+    }
+}
+
+module.exports = {getAllVideogames,getVideogameById,postVideoGameDb}
