@@ -1,4 +1,5 @@
-const {getAllVideogames} =require('../controllers/videoGamesController');
+const { getAllVideogames, 
+        getVideogameById } = require('../controllers/videoGamesController');
 
 const getVideoGamesHandler = async (req,res) => {
     const {name} = req.query;
@@ -20,6 +21,18 @@ const getVideoGamesHandler = async (req,res) => {
     }
 }
 
+const getVideoGameIdHandler = async (req,res) => {
+    const {id} = req.params;
+    const source = isNaN(id) ?  'bdd' : 'api';
+    try {
+        const response = await getVideogameById(id,source);
+        res.status(200).json(response);
+    } catch (error) {
+        res.status(400).json({error: error.message});
+    }
+}
+
 module.exports = {
-    getVideoGamesHandler
+    getVideoGamesHandler,
+    getVideoGameIdHandler,
 }

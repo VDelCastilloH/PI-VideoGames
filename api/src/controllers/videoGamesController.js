@@ -16,11 +16,11 @@ const getVgApi = async () => {
                 vgApi.push({
                     id: vg.id,
                     name: vg.name,
-                    image: vg.background_image,
-                    rating: vg.rating,
-                    released: vg.released,
                     description: `El juego ${vg.name} tiene una valoracion de ${vg.rating} de 5 y fue lanzada el ${vg.released}.`,
                     platforms: vg.platforms.map((pf)=>pf.platform.name),
+                    image: vg.background_image,
+                    released: vg.released,
+                    rating: vg.rating,
                     genres: vg.genres? vg.genres.map((ge)=>ge.name) : "Sin Genero",
                 });
             });
@@ -61,4 +61,34 @@ const getAllVideogames = async () =>{
     }
 }
 
-module.exports = {getAllVideogames,}
+const getVideogameById = async (id,source) =>{
+    if(source === 'api'){
+        const response = await axios.get(`${URL_BASE_GAMES}/${id}?key=${API_KEY}`)
+        return { 
+                id: response.data.id,
+                name:response.data.name,
+                description: response.data.description_raw,
+                platforms: response.data.platforms.map((pf)=>pf.platform.name),
+                image: response.data.background_image,
+                released: response.data.released,
+                rating: response.data.rating,
+                genres: response.data.genres? response.data.genres.map((ge)=>ge.name) : "Sin Genero"
+            }
+    } else {
+        if (source === 'bdd')
+        {   
+            const response = await Videogame.findByPk(id,{
+                include:[{
+                    model:Genre,
+                    attributes:["name"],
+                    through: {
+                        attributes: []
+                    }
+                }]
+            });
+            return response;
+        }
+    }   
+}
+
+module.exports = {getAllVideogames,getVideogameById}

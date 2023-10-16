@@ -7,7 +7,7 @@ const { getVideoGamesHandler,
 const vgRouter = Router();
 
 vgRouter.get('/', getVideoGamesHandler);
-//vgRouter.get('/:id', getVideoGameIdHandler);
+vgRouter.get('/:id', getVideoGameIdHandler);
 //vgRouter.post('/',createVideoGameHandler);
 
 module.exports = vgRouter;
