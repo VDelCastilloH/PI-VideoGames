@@ -6,7 +6,7 @@ require ("dotenv").config();
 const{ PORT } = process.env;
 
 // Sincronizando todos los modelos a la vez
-conn.sync({ force: true })
+conn.sync({ force: false })
 .then(() => {
   server.listen(PORT, () => {
     console.log(`Servidor corriendo en puerto: ${PORT} ✅`); 
