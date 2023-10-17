@@ -10,6 +10,6 @@ const genreRouter = require('./genreRouter.js');
 // Ejemplo: router.use('/auth', authRouter);
 
 mainRouter.use('/videogames',vgRouter);
-//mainRouter.use('/genres',genreRouter);
+mainRouter.use('/genres',genreRouter);
 
 module.exports = mainRouter;
