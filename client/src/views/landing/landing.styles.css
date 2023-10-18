@@ -1,0 +1,29 @@
+.landing-page {
+    text-align: center;
+    padding: 40px;
+  }
+  
+  .header h1 {
+    font-size: 36px;
+    margin-bottom: 20px;
+  }
+  
+  .main-content {
+    font-size: 24px;
+  }
+  
+  .cta-button {
+    background-color: #a0a0a0;
+    color: #000000;
+    padding: 10px 20px;
+    font-size: 20px;
+    border: none;
+    cursor: pointer;
+    margin-top: 20px;
+  }
+  
+  .landing-image {
+    max-width: 100%;
+    height: auto;
+    margin: 20px 0;
+  }
