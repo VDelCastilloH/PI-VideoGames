@@ -1,0 +1,25 @@
+.home {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /*text-align: center;*/
+    padding: 40px;
+    background: radial-gradient(
+      circle at center,
+      rgb(166, 172, 255), 
+      rgba(81, 61, 150, 1) 
+    );
+    /*background: radial-gradient(
+      circle at center,
+      rgb(53, 109, 155), 
+      rgb(21, 60, 119) 
+    );*/
+  }
+  
+  h1 {
+    font-size: 46px;
+    margin-bottom: 20px;
+    color: rgb(14, 17, 68);
+  }
+  
+ 

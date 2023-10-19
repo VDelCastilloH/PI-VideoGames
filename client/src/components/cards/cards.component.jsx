@@ -1,9 +1,16 @@
-//import './cards.styles.css';
+import Card from "../card/card.component";
 
-function Cards(){
+import './cards.styles.css';
+
+function Cards({allVideogames}){
+
+    const vgList = allVideogames;
+
     return (
-        <div>
-            <p>Esta es la Cards</p>
+        <div className="card-list">
+            {vgList?.map((vgame)=>(
+                <Card vgame = {vgame}/>
+            ))}
         </div>
     );
 }

@@ -11,7 +11,7 @@ function Landing() {
       <main className="main-content">
         <img src={imagevg} alt="Landing" className="landing-image" />  
         <h2>WebPT14b - Victor Del Castillo</h2>
-        <Link to='/home'><button className="cta-button">Empezar</button></Link>
+        <Link to='/home'><button className="btn-empezar">Empezar</button></Link>
       </main>
     </div>
   );

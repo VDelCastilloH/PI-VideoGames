@@ -1,9 +1,12 @@
-//import './card.styles.css';
+import './card.styles.css';
 
-function Card(){
+function Card({vgame}){
+    console.log(vgame);
     return (
-        <div>
-            <p>Esta es la Card</p>
+        <div className='card-container'>
+            {/* <img src= alt='Imagen de videogame' />  */}
+            <h2>Nombre:</h2>
+            <p>Genero:</p>
         </div>
     );
 }

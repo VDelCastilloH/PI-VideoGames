@@ -5,8 +5,6 @@ import Detail from './views/detail/detail.component';
 import Landing from './views/landing/landing.component';
 import Home from './views/home/home.component';
 
-import './App.css';
-
 function App() {  
   return (
     <div className="App">

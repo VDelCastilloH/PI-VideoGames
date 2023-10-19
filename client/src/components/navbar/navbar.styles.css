@@ -1,0 +1,21 @@
+.in-buscar {
+    border-radius: 10px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    outline: none;
+}
+
+.btn-buscar{
+    border-radius: 10px;
+    background-color: #3d2399;
+    border-radius: 10px;
+    color: #ffffff;
+    padding: 10px 20px;
+    font-size: 15px;
+    border: none;
+    cursor: pointer;
+    margin: 5px;
+} 
+.nav-container{
+    margin-bottom: 20px;
+}
