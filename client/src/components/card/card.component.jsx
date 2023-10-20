@@ -4,9 +4,9 @@ function Card({vgame}){
     console.log(vgame);
     return (
         <div className='card-container'>
-            {/* <img src= alt='Imagen de videogame' />  */}
-            <h2>Nombre:</h2>
-            <p>Genero:</p>
+            <img className='img-vg' src = {vgame.image} alt='Imagen de videogame' /> 
+            <h2>Nombre: {vgame.name} </h2>
+            <p>Genero: </p>
         </div>
     );
 }

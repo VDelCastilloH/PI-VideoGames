@@ -9,8 +9,8 @@ import './home.styles.css';
 
 function Home() {
   const dispatch = useDispatch();
-  const allVideogames = useSelector((state)=>state.allVideogames);
-
+  const allVideogames = useSelector((state) => state.allVideoGames);
+  //console.log(allVideogames);
   useEffect(()=>{
     dispatch(getVideogames());
   },[dispatch]);
@@ -19,7 +19,7 @@ function Home() {
       <div className="home">
         <h1>Home</h1>
         <Navbar/>
-        <Cards allVideogames={allVideogames} />
+        <Cards vgames={allVideogames} />
       </div>
     );
   }
