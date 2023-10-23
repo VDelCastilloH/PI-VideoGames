@@ -1,7 +1,7 @@
 .card-container{
     display: flex;
     flex-direction: column;
-    background-color: rgb(255, 255, 255);
+    background-color: transparent;
     border: 1px solid grey;
     border-radius: 5px;
     padding: 25px;
@@ -10,6 +10,13 @@
     backface-visibility: hidden;
     transform: translateZ(0);
     transition: transform 0.25s ease-out;
+    box-shadow: 
+                /*0 0 2px rgb(223, 216, 231),
+                0 0 4px rgb(187, 171, 207),
+                0 0 6px rgb(139, 112, 175), */
+                0 0 8px rgb(18, 3, 37),
+                0 0 10px rgb(18, 2, 39),
+                0 0 12px rgb(5, 0, 12);
 }
 
 .card-container:hover{
@@ -19,4 +26,9 @@
 .img-vg{
     /* height: 200px ; */
     width: 250px;
+}
+
+.card{
+    text-decoration: none;
+    color: black;
 }

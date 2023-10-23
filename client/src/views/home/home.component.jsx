@@ -1,6 +1,5 @@
 import { useEffect } from "react";
-import {useDispatch, useSelector} from 'react-redux';
-import { getVideogames } from "../../redux/actions";
+import { useSelector} from 'react-redux';
 
 import Navbar from "../../components/navbar/navbar.component";
 import Cards from "../../components/cards/cards.component";
@@ -8,18 +7,20 @@ import Cards from "../../components/cards/cards.component";
 import './home.styles.css';
 
 function Home() {
-  const dispatch = useDispatch();
-  const allVideogames = useSelector((state) => state.allVideoGames);
-  //console.log(allVideogames);
+  
+  //const allVideoGames = useSelector((state)=> state.allVideoGames);
+  const filtered = useSelector((state)=> state.videogames)
+    
+  //console.log(allVideoGames);
+
   useEffect(()=>{
-    dispatch(getVideogames());
-  },[dispatch]);
+  },[filtered]);
 
     return (
       <div className="home">
-        <h1>Home</h1>
+        <h1>VIDEOGAMES</h1>
         <Navbar/>
-        <Cards vgames={allVideogames} />
+        <Cards vgames={filtered} />
       </div>
     );
   }

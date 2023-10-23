@@ -1,8 +1,18 @@
-import './landing.styles.css';
-import imagevg from '../../img/videogame.jpeg'
 import {Link} from 'react-router-dom';
+import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { getVideogames } from '../../redux/actions';
+
+import imagevg from '../../img/videogame.jpeg'
+import './landing.styles.css';
 
 function Landing() {
+  const dispatch = useDispatch();
+  
+  useEffect(()=>{
+    dispatch(getVideogames());
+  },[dispatch]);
+
   return (
     <div className="landing-page">
       <header className="header">

@@ -8,7 +8,7 @@ function Cards({vgames}){
     return (
         <div className="card-list">
             {vgList?.map((vgame)=>(
-                <Card vgame = {vgame}/>
+                <Card key = {vgame.id} vgame = {vgame}/>
             ))}
         </div>
     );
