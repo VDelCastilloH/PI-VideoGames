@@ -1,16 +1,15 @@
 import {Link} from 'react-router-dom';
 import { useState } from 'react';
-import { useDispatch} from 'react-redux';
-import { getVgByName } from '../../redux/actions';
+import { useDispatch } from 'react-redux';
+import { getVgByName, getVideogames } from '../../redux/actions';
 import './navbar.styles.css';
 
 function Navbar(){
     const dispatch = useDispatch();
     
     let [name, setName] = useState('');
+    //const allVg = useSelector((state)=>state.allVideoGames);
     
-    //const videogames = useSelector((state)=>state.videogames);
-    //console.log(videogames);
 
     function handleInput(e){
         e.preventDefault();
@@ -21,6 +20,11 @@ function Navbar(){
         e.preventDefault();
         dispatch(getVgByName(name));
         setName('');
+    }
+
+    function handleAllVg(e){
+        e.preventDefault();
+        dispatch(getVideogames());
     }
 
     return (
@@ -38,11 +42,13 @@ function Navbar(){
                     placeholder="🔎"
                     onChange={(e)=> handleInput(e)}
                     onKeyDown={(e)=> e.key === "Enter" && handleSubmit(e)}
-                    value={name}
-                    name={name}/>
+                    value={name}/>
                     <button className="btn"
                     type='submit'
                     onClick={(e) => handleSubmit(e)}><b>Search</b></button>
+                    <button className="btn"
+                    type='button'
+                    onClick={(e) => handleAllVg(e)}><b>All Videogames</b></button>
                 </form>
             </div>
         </nav>
