@@ -3,7 +3,10 @@ import { GET_VIDEOGAMES,
         GET_DETAIL, 
         CLEAN_DETAIL,
         ORDER_BY_NAME,
-        GET_GENRES } from "./action-types";
+        GET_GENRES,
+        ORDER_BY_RATING,
+        FILTER_BY_GENRE,
+        FILTER_BY_SOURCE } from "./action-types";
 
 const initialState = {
     allVideoGames:[],
@@ -65,6 +68,45 @@ const initialState = {
                 videogames: vgOrdered,
             };
 
+        case ORDER_BY_RATING:
+            const ratingOrdered = action.payload === 'MIN' ?
+            state.allVideoGames.sort((a,b) => {
+                if (a.rating > b.rating) return 1;
+                if (b.rating > a.rating) return -1;
+                return 0;
+            })
+            : state.allVideoGames.sort((a, b) => {
+                if (a.rating > b.rating) return -1;
+                if (b.rating > a.rating) return 1;
+                return 0;
+            });
+            return {
+                ...state,
+                videogames: ratingOrdered,
+            };
+        
+        case FILTER_BY_GENRE:
+            const genre = action.payload
+            state.videogames = state.allVideoGames.filter(vg => vg.genres?.includes(genre))
+            if(action.payload === "All") state.videogames = state.allVideoGames
+            if(state.videogames.length === 0) {
+                alert(`😢 No videogames were found with the selected genre`)
+                state.videogames = state.allVideoGames
+            }
+            return {
+                ...state,
+                videogames: state.videogames
+            }; 
+
+        case FILTER_BY_SOURCE:
+            const allVg = state.allVideoGames;
+            const source = action.payload === 'DB' ? allVg.filter(vg => vg.createdDB)
+            : allVg.filter(vg => { if(!vg.hasOwnProperty("createdDB")) return vg});
+            return {
+                ...state,
+                videogames: action.payload === 'All' ? allVg : source
+            };
+        
         default:
             return state;
     }

@@ -1,9 +1,13 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
-import { NavLink } from "react-router-dom";
+//import { NavLink } from "react-router-dom";
 import Card from "../card/card.component";
 
-import {getGenres, orderByName} from '../../redux/actions'
+import { getGenres, 
+         orderByName,
+         orderByRating,
+         filterByGenre,
+         filterBySource} from '../../redux/actions'
 
 import './cards.styles.css';
 
@@ -14,47 +18,70 @@ function Cards({vgames}){
 
     const [order,setOrder] = useState(false);
 
+    const [oByName, setOByName] = useState('default'); 
+    const [oByRating, setOByRating] = useState('default'); 
+    const [fByGenre, setFByGenre] = useState('All'); 
+    const [fBySource, setFBySource] = useState('All');
+
+
     useEffect(() => {
         dispatch(getGenres());
     }, [dispatch]);
 
     function handlerOrderByName(e){
+        setOByName(e.target.value);
+        setOByRating('default');
+        setFByGenre('All');
+        setFBySource('All');
         dispatch(orderByName(e.target.value));
         setOrder(!order);
     }
 
     function handlerOrderByRating(e){
-
+        setOByName('default');
+        setOByRating(e.target.value);
+        setFByGenre('All');
+        setFBySource('All');
+        dispatch(orderByRating(e.target.value));
+        setOrder(!order);
     }
 
     function handlerFilterByGenre(e){
-
+        setOByName('default');
+        setOByRating('default');
+        setFByGenre(e.target.value);
+        setFBySource('All');
+        dispatch(filterByGenre(e.target.value));
     }
 
     function handlerFilterSource(e){
-
+        setOByName('default');
+        setOByRating('default');
+        setFByGenre('All');
+        setFBySource(e.target.value);
+        dispatch(filterBySource(e.target.value));
     }
 
     return (
         <div className="cards-cont">
             <div className="filters-cont">
-                <select className="order" onChange={(e)=>handlerOrderByName(e)}>
-                    <option className="option" disabled selected>Order by alphabeth</option>
+                <select className="order" onChange={(e)=>handlerOrderByName(e)} value={oByName}>
+                    <option value= "default" className="option" disabled selected>Order by alphabeth</option>
                     <option value="ASC">From A to Z</option>
-                    <option>From Z to A</option>
+                    <option value="DES">From Z to A</option>
                 </select>
-                <select className="order" onChange={(e)=> handlerOrderByRating(e)}>
-                    <option className="option" disabled selected> Order by Rating </option>
-                    <option value="MIN">Worst Rated</option>
-                    <option value="MAX">Best Rated</option>
+                <select className="order" onChange={(e)=> handlerOrderByRating(e)} value={oByRating}>
+                    <option value= "default" className="option" disabled selected> Order by Rating </option>
+                    <option value="MIN">⬇ Worst Rated</option>
+                    <option value="MAX">⬆ Best Rated</option>
                 </select>
-                <select className="option" onChange={(e) => handlerFilterByGenre(e)}>
-                    <option value="All" disabled selected> Filter by Genre </option>
+                <select className="option" onChange={(e) => handlerFilterByGenre(e)} value={fByGenre}>
+                    <option value="All"> Filter by Genre (All) </option>
                     {allGenres?.map((g) => (<option key={g.name} value={g.name}>
                     {g.name[0].toUpperCase() + g.name.slice(1)}</option>))}
                 </select>
-                <select className="option" onChange={(e) => handlerFilterSource(e)}>
-                    <option value="All" disabled selected> {" "} Filter by Source{" "} </option>
+                <select className="option" onChange={(e) => handlerFilterSource(e)} value={fBySource}>
+                    <option value="All"> Filter by Source (All) </option>
                     <option value="DB"> Created </option>
                     <option value="API"> From API </option>
                 </select>

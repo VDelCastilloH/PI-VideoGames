@@ -24,11 +24,14 @@
 }
 
 .img-vg{
-    /* height: 200px ; */
     width: 250px;
 }
 
 .card{
     text-decoration: none;
     color: black;
+}
+
+h3, p{
+    text-align: left;
 }

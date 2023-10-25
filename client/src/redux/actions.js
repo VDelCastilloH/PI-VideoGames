@@ -5,7 +5,10 @@ import { GET_VIDEOGAMES,
         GET_DETAIL, 
         CLEAN_DETAIL,
         GET_GENRES,
-        ORDER_BY_NAME } from './action-types';
+        ORDER_BY_NAME,
+        ORDER_BY_RATING,
+        FILTER_BY_GENRE,
+        FILTER_BY_SOURCE } from './action-types';
         
 
 const URL_BASE_VG = "http://localhost:3001/videogames";
@@ -67,12 +70,10 @@ export function getGenres() {
 }
 
 export function cleanDetail() {
-  return function (dispatch) {
-    return dispatch({
+  return {
       type: CLEAN_DETAIL,
       payload: []
-    })
-  }
+    }
 }
 
 export function orderByName(order) {
@@ -80,4 +81,25 @@ export function orderByName(order) {
     type: ORDER_BY_NAME,
     payload: order,
   };
+}
+
+export function orderByRating(order) {
+  return {
+    type: ORDER_BY_RATING,
+    payload: order,
+  };
+}
+
+export function filterByGenre(genre){
+  return {
+    type: FILTER_BY_GENRE,
+    payload: genre,
+  }
+}
+
+export function filterBySource(source){
+  return {
+    type: FILTER_BY_SOURCE,
+    payload: source, 
+  }
 }
