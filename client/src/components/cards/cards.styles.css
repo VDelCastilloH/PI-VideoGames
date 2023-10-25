@@ -7,3 +7,33 @@
     border-top: 2px solid rgb(5, 4, 66);
     padding: 20px;
 }
+
+.order{
+    margin-right: 20px;
+    cursor: pointer;
+    text-decoration: none;
+    border: 2px solid #0e023a;;
+    border-radius: 6px;
+    font-size: 14px;
+    box-shadow: 0 0 2px #f0f1ff,
+                0 0 4px #cdccff, 
+                0 0 6px #b8b3ff, 
+                0 0 8px #8f91ff, 
+                0 0 10px #7e75ff, 
+                0 0 20px #594dff;
+}
+
+.option{
+    margin-right: 20px;
+    cursor: pointer;
+    text-decoration: none;
+    border: 2px solid #0e023a;;
+    border-radius: 6px;
+    font-size: 14px;
+    box-shadow: 0 0 2px #f0f1ff,
+                0 0 4px #cdccff, 
+                0 0 6px #b8b3ff, 
+                0 0 8px #8f91ff, 
+                0 0 10px #7e75ff, 
+                0 0 20px #594dff;
+}

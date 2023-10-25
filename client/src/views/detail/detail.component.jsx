@@ -31,7 +31,7 @@ function Detail() {
               <img src={detailVg.image} alt="Img Videogame" width="400vh" />  
             </div>    
             <div className="info-detail">
-              <h1>{detailVg.name || "name not found"}</h1>
+              <h1>{`(${detailVg.id})-${detailVg.name}` || "name not found"}</h1>
               <h2>RATING ⭐       |  {detailVg.rating || "rating not found"}</h2>
               <h3>RELEASED 📅     |  {detailVg.released || "released not found"}</h3>
               <h3>PLATFORMS 🎮    |  {detailVg.platforms?.map((p) => p).join(", ")|| "platforms not found"}</h3>

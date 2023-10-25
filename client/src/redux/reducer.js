@@ -1,4 +1,9 @@
-import { GET_VIDEOGAMES, GET_VG_BY_NAME, GET_DETAIL, CLEAN_DETAIL } from "./action-types";
+import { GET_VIDEOGAMES, 
+        GET_VG_BY_NAME, 
+        GET_DETAIL, 
+        CLEAN_DETAIL,
+        ORDER_BY_NAME,
+        GET_GENRES } from "./action-types";
 
 const initialState = {
     allVideoGames:[],
@@ -18,9 +23,7 @@ const initialState = {
                 videogames: action.payload,
                 //isLoading: action.payload,
             };
-            // state = {...state, allVideoGames: action.payload}
-            // console.log(state);
-            // return;
+            
         case GET_VG_BY_NAME:
             return{
                 ...state, 
@@ -33,11 +36,34 @@ const initialState = {
                 detail: action.payload,
             };
 
+        case GET_GENRES:
+            return{
+                ...state, 
+                genres: action.payload,
+            };  
+
         case CLEAN_DETAIL:
             return{
                 ...state, 
                 detail: action.payload,
-            }
+            };
+        
+        case ORDER_BY_NAME:     
+            const vgOrdered = action.payload === "ASC"? 
+                state.allVideoGames.sort(function (a, b) {
+                if (a.name.toLowerCase() > b.name.toLowerCase()) return 1;
+                if (b.name.toLowerCase() > a.name.toLowerCase()) return -1;
+                return 0; 
+                })
+            : state.allVideoGames.sort(function (a, b) {
+                if (a.name.toLowerCase() > b.name.toLowerCase()) return -1;
+                if (b.name.toLowerCase() > a.name.toLowerCase()) return 1;
+                return 0;
+                });
+            return {
+            ...state,
+                videogames: vgOrdered,
+            };
 
         default:
             return state;

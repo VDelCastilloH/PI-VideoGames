@@ -8,9 +8,7 @@ function Navbar(){
     const dispatch = useDispatch();
     
     let [name, setName] = useState('');
-    //const allVg = useSelector((state)=>state.allVideoGames);
     
-
     function handleInput(e){
         e.preventDefault();
         setName(e.target.value);
@@ -47,7 +45,6 @@ function Navbar(){
                     type='submit'
                     onClick={(e) => handleSubmit(e)}><b>Search</b></button>
                     <button className="btn"
-                    type='button'
                     onClick={(e) => handleAllVg(e)}><b>All Videogames</b></button>
                 </form>
             </div>
