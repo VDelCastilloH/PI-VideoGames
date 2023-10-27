@@ -43,8 +43,12 @@ const getVgDb = async () => {
                 }
             }]
         });
-        //console.log(vgDB);
-        return vgDB;
+        // console.log(vgBD)
+        const vgDBFormat = vgDB.map(result => ({
+            ...result.toJSON(),
+            genres: result.Genres.map(genre => genre.name)
+          }));
+        return vgDBFormat;
     } catch (error) {
         return {error: error.message};
     }
@@ -87,7 +91,9 @@ const getVideogameById = async (id,source) =>{
                         }
                     }]
                 });
-                return response;
+                //console.log(response);
+                const respFormat = {...response.toJSON(), genres: response.Genres.map(genre => genre.name)};
+                return respFormat;
             }
         }   
     } catch (error) {

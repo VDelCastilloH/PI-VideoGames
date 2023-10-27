@@ -87,11 +87,13 @@ const initialState = {
         
         case FILTER_BY_GENRE:
             const genre = action.payload
-            state.videogames = state.allVideoGames.filter(vg => vg.genres?.includes(genre))
             if(action.payload === "All") state.videogames = state.allVideoGames
-            if(state.videogames.length === 0) {
+            else {
+                state.videogames = state.allVideoGames.filter(vg => vg.genres?.includes(genre))
+                if(state.videogames.length === 0) {
                 alert(`😢 No videogames were found with the selected genre`)
                 state.videogames = state.allVideoGames
+                }
             }
             return {
                 ...state,
@@ -99,12 +101,12 @@ const initialState = {
             }; 
 
         case FILTER_BY_SOURCE:
-            const allVg = state.allVideoGames;
-            const source = action.payload === 'DB' ? allVg.filter(vg => vg.createdDB)
-            : allVg.filter(vg => { if(!vg.hasOwnProperty("createdDB")) return vg});
+            const Vg = state.allVideoGames;
+            const source = action.payload === 'DB' ? Vg.filter(vg => vg.createdDB)
+            : Vg.filter(vg => { if(!vg.hasOwnProperty("createdDB")) return vg});
             return {
                 ...state,
-                videogames: action.payload === 'All' ? allVg : source
+                videogames: action.payload === 'All' ? Vg : source
             };
         
         default:

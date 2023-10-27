@@ -3,7 +3,8 @@ import { useEffect, useState } from "react";
 //import { NavLink } from "react-router-dom";
 import Card from "../card/card.component";
 
-import { getGenres, 
+import { getVideogames,
+         getGenres, 
          orderByName,
          orderByRating,
          filterByGenre,
@@ -62,6 +63,14 @@ function Cards({vgames}){
         dispatch(filterBySource(e.target.value));
     }
 
+    function handleAllVg(e){
+        dispatch(getVideogames());
+        setOByName('default');
+        setOByRating('default');
+        setFByGenre('All');
+        setFBySource('All');
+    }
+
     return (
         <div className="cards-cont">
             <div className="filters-cont">
@@ -85,6 +94,8 @@ function Cards({vgames}){
                     <option value="DB"> Created </option>
                     <option value="API"> From API </option>
                 </select>
+                <button className="btn"
+                    onClick={(e) => handleAllVg(e)}><b>Reset Filters</b></button>
             </div>
             <br />
             {/* <Pagination videogamesPerPage={videogamesPerPage}

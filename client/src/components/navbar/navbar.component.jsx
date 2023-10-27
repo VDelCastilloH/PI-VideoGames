@@ -20,11 +20,6 @@ function Navbar(){
         setName('');
     }
 
-    function handleAllVg(e){
-        e.preventDefault();
-        dispatch(getVideogames());
-    }
-
     return (
         <nav className='navbar'>
             <div className='nav-container'>
@@ -44,8 +39,6 @@ function Navbar(){
                     <button className="btn"
                     type='submit'
                     onClick={(e) => handleSubmit(e)}><b>Search</b></button>
-                    <button className="btn"
-                    onClick={(e) => handleAllVg(e)}><b>All Videogames</b></button>
                 </form>
             </div>
         </nav>
