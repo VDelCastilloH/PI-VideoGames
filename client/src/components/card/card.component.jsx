@@ -1,8 +1,8 @@
+import React from 'react';
 import { Link } from 'react-router-dom';
 import './card.styles.css';
 
 function Card({vgame}){
-    //console.log((vgame.genres).join(', '));
     return (
         <div className='card-container'>
             <Link className='card' to={`/videogames/${vgame.id}`}>

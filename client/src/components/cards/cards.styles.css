@@ -37,3 +37,8 @@
                 0 0 10px #7e75ff, 
                 0 0 20px #594dff;
 }
+.line{
+    width: 85vw;
+    border-top: 2px solid rgb(5, 4, 66);
+    padding: 20px;
+}

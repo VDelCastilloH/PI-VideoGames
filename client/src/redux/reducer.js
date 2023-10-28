@@ -1,21 +1,22 @@
 import { GET_VIDEOGAMES, 
         GET_VG_BY_NAME, 
         GET_DETAIL, 
+        CREATE_VIDEOGAME,
         CLEAN_DETAIL,
         ORDER_BY_NAME,
         GET_GENRES,
         ORDER_BY_RATING,
         FILTER_BY_GENRE,
-        FILTER_BY_SOURCE } from "./action-types";
+        FILTER_BY_SOURCE,
+        SET_PAGE } from "./action-types";
 
 const initialState = {
     allVideoGames:[],
     videogames:[],
     genres:[],
     detail:[],
-    page:1,
-    isLoading: true,
- };
+    currentPage: 1,
+};
 
  function rootReducer (state = initialState, action){
     switch (action.type) {
@@ -24,7 +25,6 @@ const initialState = {
                 ...state, 
                 allVideoGames: action.payload,
                 videogames: action.payload,
-                //isLoading: action.payload,
             };
             
         case GET_VG_BY_NAME:
@@ -44,6 +44,12 @@ const initialState = {
                 ...state, 
                 genres: action.payload,
             };  
+
+        case CREATE_VIDEOGAME:
+            return{
+                ...state, 
+                allVideoGames: [...state.allVideoGames, action.payload ]
+            }; 
 
         case CLEAN_DETAIL:
             return{
@@ -91,7 +97,7 @@ const initialState = {
             else {
                 state.videogames = state.allVideoGames.filter(vg => vg.genres?.includes(genre))
                 if(state.videogames.length === 0) {
-                alert(`😢 No videogames were found with the selected genre`)
+                alert(`😢 No video games were found with the selected genre.`)
                 state.videogames = state.allVideoGames
                 }
             }
@@ -103,10 +109,16 @@ const initialState = {
         case FILTER_BY_SOURCE:
             const Vg = state.allVideoGames;
             const source = action.payload === 'DB' ? Vg.filter(vg => vg.createdDB)
-            : Vg.filter(vg => { if(!vg.hasOwnProperty("createdDB")) return vg});
+            : Vg.filter(vg => !vg.createdDB);
             return {
                 ...state,
                 videogames: action.payload === 'All' ? Vg : source
+            };
+        
+        case SET_PAGE:
+            return { 
+                ...state, 
+                currentPage: action.payload
             };
         
         default:

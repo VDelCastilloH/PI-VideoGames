@@ -1,0 +1,18 @@
+.btn-container{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-page{
+    background-color: #3d2399;
+    border-radius: 4px;
+    color: #ffffff;
+    padding: 5px 5px;
+    font-size: 10px;
+    border: none;
+    cursor: pointer;
+    text-align: center;
+    margin-left: 2px;
+    margin-bottom: 5px;
+}

@@ -1,14 +1,16 @@
+import React from 'react';
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
-//import { NavLink } from "react-router-dom";
-import Card from "../card/card.component";
 
+import Card from "../card/card.component";
+import Pagination from '../Pagination/pagination.component';
 import { getVideogames,
          getGenres, 
          orderByName,
          orderByRating,
          filterByGenre,
-         filterBySource} from '../../redux/actions'
+         filterBySource,
+         setPage} from '../../redux/actions'
 
 import './cards.styles.css';
 
@@ -16,6 +18,13 @@ function Cards({vgames}){
     
     const dispatch = useDispatch();
     const allGenres = useSelector((state)=>state.genres);
+    const currentPage = useSelector((state)=>state.currentPage);
+    const itemsPerPage = 15;
+
+    //------------------Paginacion--------------------------------
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    const endIndex = startIndex + itemsPerPage;
+    const itemsToDisplay = vgames.slice(startIndex, endIndex);
 
     const [order,setOrder] = useState(false);
 
@@ -26,10 +35,12 @@ function Cards({vgames}){
 
 
     useEffect(() => {
+        //dispatch(getVideogames());
         dispatch(getGenres());
     }, [dispatch]);
 
     function handlerOrderByName(e){
+        dispatch(setPage(1));
         setOByName(e.target.value);
         setOByRating('default');
         setFByGenre('All');
@@ -39,6 +50,7 @@ function Cards({vgames}){
     }
 
     function handlerOrderByRating(e){
+        dispatch(setPage(1));
         setOByName('default');
         setOByRating(e.target.value);
         setFByGenre('All');
@@ -48,6 +60,7 @@ function Cards({vgames}){
     }
 
     function handlerFilterByGenre(e){
+        dispatch(setPage(1));
         setOByName('default');
         setOByRating('default');
         setFByGenre(e.target.value);
@@ -56,6 +69,7 @@ function Cards({vgames}){
     }
 
     function handlerFilterSource(e){
+        dispatch(setPage(1));
         setOByName('default');
         setOByRating('default');
         setFByGenre('All');
@@ -65,6 +79,7 @@ function Cards({vgames}){
 
     function handleAllVg(e){
         dispatch(getVideogames());
+        dispatch(setPage(1));
         setOByName('default');
         setOByRating('default');
         setFByGenre('All');
@@ -97,36 +112,14 @@ function Cards({vgames}){
                 <button className="btn"
                     onClick={(e) => handleAllVg(e)}><b>Reset Filters</b></button>
             </div>
-            <br />
-            {/* <Pagination videogamesPerPage={videogamesPerPage}
-                allVideogames={allVideogames.length}
-                paginado={paginado}
-                currentPage={currentPage}
-                setPage={setPage}/>
-            <div className={style.cardBox}>
-                {currentGames.length > 0 ? (
-                currentGames.map((game) => {
-                return (
-                    <NavLink
-                        key={game.id}
-                        to={`/videogames/${game.id}`}
-                        style={{ textDecoration: "none" }}>
-                    <Card
-                        key={game.id}
-                        id={game.id}
-                        name={game.name}
-                        rating={game.rating}
-                        background_image={game.background_image}
-                        genres={game.genres}
-                    />
-                    </NavLink>);
-                })) 
-                : (<span className={style.loader}></span>)}
-            </div> */}
+            <Pagination/>
             <div className="card-list">
-                    {vgames?.map((vgame)=>(
+                    {itemsToDisplay?.map((vgame)=>(
                         <Card key = {vgame.id} vgame = {vgame}/>
                     ))}
+            </div>
+            <div className='line'>
+                <Pagination/>
             </div>
         </div>
     );
