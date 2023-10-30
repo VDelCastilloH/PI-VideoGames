@@ -17,7 +17,7 @@ function Home() {
       <div className="home">
         <h1>VIDEOGAMES</h1>
         <Navbar/>
-        <Cards vgames={filtered} />
+        <Cards/>
       </div>
     );
   }

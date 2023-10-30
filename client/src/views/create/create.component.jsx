@@ -93,7 +93,7 @@ function Create() {
 
   useEffect(() => {
     dispatch(getGenres());
-    return () => {dispatch(getVideogames());}
+    //return () => {dispatch(getVideogames());}
   }, [dispatch]);
   
   function handleChange(e) {
@@ -143,11 +143,11 @@ function Create() {
     });
   }
 
- async function handleSubmit(e) {
+ function handleSubmit(e) {
     e.preventDefault();
-    let Repeted = allVg.filter((vg) => vg.name === form.name);
-    if (Repeted.length !== 0) {
-      alert("Please choose another name, that already exists");
+    let repeted = allVg.filter((vg) => vg.name === form.name);
+    if (repeted.length !== 0) {
+      alert("⚠ Please choose another name, that already exists");
     } else {
       if (
         Object.keys(error).length !== 0 ||
@@ -158,15 +158,9 @@ function Create() {
       } else {
         if (Object.keys(error).length === 0 && form.genres.length > 0) {
           //console.log(form);
-          try {
-            const resp = await dispatch(createVg(form));
-            if(resp.type) 
-            alert("✅ Successfully created video game");
-          } catch (error) {
-              return error;
-          } 
+          dispatch(createVg(form));
           dispatch(getVideogames());
-          //alert("✅ Successfully created video game");
+          alert("✅ Successfully created video game");
           setForm({
             name: "",
             image: "",
@@ -187,7 +181,6 @@ function Create() {
         <div className='form'>
           <h1> CREATE VIDEOGAME 🎮 </h1>
           <div className='inputs'>
-            {/* <div> */}
 {/*-----------------------------------------NAME-------------------------------------------------------*/}
               <div className="div-container">
                 <label className=""><b>Name: </b></label>
@@ -244,13 +237,11 @@ function Create() {
                 />
                 {error.rating && <p className="error">{error.rating}</p>}
               </div>
-            {/* </div> */}
 {/*-------------------------------------------PLATFORMS-----------------------------------------------------*/}
-            {/* <div> */}
               <div className="div-container">
                 <label> <b>Platforms: </b> </label>
                 <select onChange={(e) => handleSelectPlatform(e)} className="in-select">
-                  <option disabled hidden>
+                  <option disabled selected>
                     Platforms
                   </option>
                   {platforms.map((plt) => (
@@ -277,7 +268,7 @@ function Create() {
               <div className="div-container">
                 <label> <b>Genres: </b> </label>
                 <select onChange={(e) => handleSelectGenre(e)} className="in-select">
-                  <option disabled hidden>
+                  <option disabled selected>
                     Genres
                   </option>
                   {genres.map((gen) => (
@@ -320,7 +311,6 @@ function Create() {
                 {error.description && (
                   <p className="error">{error.description}</p>
                 )}
-            {/* </div> */}
           </div>
 {/*-----------------------------------------------BTN CREATE AND CANCEL-------------------------------------------------*/}
           <div className="div-btn">

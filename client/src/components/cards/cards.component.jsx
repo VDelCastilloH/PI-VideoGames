@@ -14,11 +14,12 @@ import { getVideogames,
 
 import './cards.styles.css';
 
-function Cards({vgames}){
+function Cards(){
     
     const dispatch = useDispatch();
     const allGenres = useSelector((state)=>state.genres);
     const currentPage = useSelector((state)=>state.currentPage);
+    const vgames = useSelector((state)=>state.videogames)
     const itemsPerPage = 15;
 
     //------------------Paginacion--------------------------------
@@ -35,7 +36,6 @@ function Cards({vgames}){
 
 
     useEffect(() => {
-        //dispatch(getVideogames());
         dispatch(getGenres());
     }, [dispatch]);
 
