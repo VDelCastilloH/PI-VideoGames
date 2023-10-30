@@ -8,7 +8,6 @@ import Cards from "../../components/cards/cards.component";
 import './home.styles.css';
 
 function Home() {
-    
   const filtered = useSelector((state)=> state.videogames)
       
   useEffect(()=>{

@@ -35,13 +35,14 @@ export function getVgByName(name) {
   return async function (dispatch) {
     try {
       const response = await axios.get(`${URL_BASE_VG}?name=${name}`);
-      //console.log(response.data);
+      //console.log(response);
       return dispatch({
         type: GET_VG_BY_NAME,
         payload: response.data,
       });
     } catch (error) {
-        return {error: error.response.data};
+      console.log(error);  
+      return alert(`⚠ Error: ${error.response.data}`)
     }
   }
 }
@@ -63,11 +64,15 @@ export function getDetail(id){
 
 export function getGenres() {
   return async function (dispatch) {
-    const response = await axios.get(URL_BASE_GENRES);
-    return dispatch({
-      type: GET_GENRES,
-      payload: response.data,
-    });
+    try {
+      const response = await axios.get(URL_BASE_GENRES);
+      return dispatch({
+        type: GET_GENRES,
+        payload: response.data,
+      });
+    } catch (error) {
+        return {error: error.message}
+    }
   };
 }
 
@@ -75,13 +80,13 @@ export function createVg(videogame){
   return async function (dispatch){
     try {
       const vgCreated = await axios.post(URL_BASE_VG,videogame);
-      console.log(vgCreated);
+      //console.log(vgCreated);
       return dispatch({
           type: CREATE_VIDEOGAME,
           payload: vgCreated
       })
     } catch (error) {
-        return {error: error.message}    
+        return alert(`⚠ Error: ${error.response.data}`)    
     }
   }
 }

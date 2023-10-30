@@ -14,7 +14,7 @@ const getVideoGamesHandler = async (req,res) => {
             
             vgName.length 
                 ? res.status(200).json(vgName.slice(0,15)) 
-                : res.status(400).send('Videojuego no encontrado');
+                : res.status(400).send('Videogame not found');
         }
 
     } catch (error) {
@@ -52,7 +52,8 @@ const createVideoGameHandler = async (req,res) =>{
         if(!newVg.error){
             res.status(200).json(newVg);
         } else {
-            res.status(400).json(newVg);
+            //console.log(newVg.error);
+            res.status(400).json(newVg.error);
         }
     } catch (error) {
         res.status(400).json({error: error.message});

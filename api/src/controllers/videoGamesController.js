@@ -16,12 +16,12 @@ const getVgApi = async () => {
                 vgApi.push({
                     id: vg.id,
                     name: vg.name,
-                    description: `El juego ${vg.name} tiene una valoracion de ${vg.rating} de 5 y fue lanzada el ${vg.released}.`,
+                    description: `The game ${vg.name} has a rating of ${vg.rating} out of 5 and was released on ${vg.released}.`,
                     platforms: vg.platforms.map((pf)=>pf.platform.name),
                     image: vg.background_image,
                     released: vg.released,
                     rating: vg.rating,
-                    genres: vg.genres? vg.genres.map((ge)=>ge.name) : "Sin Genero",
+                    genres: vg.genres? vg.genres.map((ge)=>ge.name) : "no gender",
                 });
             });
             urlApi = response.data.next;
@@ -77,7 +77,7 @@ const getVideogameById = async (id,source) =>{
                     image: response.data.background_image,
                     released: response.data.released,
                     rating: response.data.rating,
-                    genres: response.data.genres? response.data.genres.map((ge)=>ge.name) : "Sin Genero"
+                    genres: response.data.genres? response.data.genres.map((ge)=>ge.name) : "no gender"
                 }
         } else {
             if (source === 'bdd')
@@ -121,10 +121,10 @@ const postVideoGameDb = async (name, description, platforms, image, released, ra
                 await newVg.addGenre(dbGen);
                 return newVg;
             } else {
-                return { error: `Un Videojuego con el nombre: ${name} ya existe en la Base de Datos` }
+                return { error: `A video game with the name (${name}) already exists in the database` }
             }
         } else {
-            return { error: `El Videojuego debe que tener un nombre` }
+            return { error: `The Video Game must have a name` }
         }
     } catch (error) {
         return {error: error.message};

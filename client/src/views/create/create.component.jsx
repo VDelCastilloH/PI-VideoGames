@@ -15,11 +15,11 @@ const validate = (form) => {
 
   //---------------------------------validaciones para el nombre-----------------------------------------------  
  
-  if (!form.name.length) {
-    error.name = "The name cannot be empty";
-  }
   if (!validName.test(form.name)) {
     error.name = "Numbers and special characters are not allowed.";
+  }
+  if (!form.name.length) {
+    error.name = "The name cannot be empty";
   }
  
   //---------------------------------validacion para la URL de la imagen----------------------------------------
@@ -63,7 +63,18 @@ function Create() {
   const genres = useSelector((state) => state.genres);
   const allVg = useSelector((state) => state.allVideoGames);
   const navigate = useNavigate();
+
   const [error, setError] = useState({});
+
+  const [form, setForm] = useState({
+    name: "",
+    image: "",
+    description: "",
+    released: "",
+    rating: 0,
+    platforms: [],
+    genres: [],
+  });
 
   const platforms = [
     "PC",
@@ -80,18 +91,7 @@ function Create() {
     "macOS",
   ];
 
-  const [form, setForm] = useState({
-    name: "",
-    image: "",
-    description: "",
-    released: "",
-    rating: 0,
-    platforms: [],
-    genres: [],
-  });
-
   useEffect(() => {
-    dispatch(getVideogames());
     dispatch(getGenres());
     return () => {dispatch(getVideogames());}
   }, [dispatch]);
@@ -143,9 +143,9 @@ function Create() {
     });
   }
 
-  function handleSubmit(e) {
+ async function handleSubmit(e) {
     e.preventDefault();
-    let Repeted = allVg.filter((n) => n.name === form.name);
+    let Repeted = allVg.filter((vg) => vg.name === form.name);
     if (Repeted.length !== 0) {
       alert("Please choose another name, that already exists");
     } else {
@@ -158,9 +158,15 @@ function Create() {
       } else {
         if (Object.keys(error).length === 0 && form.genres.length > 0) {
           //console.log(form);
-          dispatch(createVg(form));
+          try {
+            const resp = await dispatch(createVg(form));
+            if(resp.type) 
+            alert("✅ Successfully created video game");
+          } catch (error) {
+              return error;
+          } 
           dispatch(getVideogames());
-          alert("✅ Successfully created video game");
+          //alert("✅ Successfully created video game");
           setForm({
             name: "",
             image: "",
@@ -178,10 +184,10 @@ function Create() {
   return (
     <div className="create">
       <form className="" onSubmit={(e) => handleSubmit(e)}>
-        <div>
+        <div className='form'>
           <h1> CREATE VIDEOGAME 🎮 </h1>
-          <div>
-            <div>
+          <div className='inputs'>
+            {/* <div> */}
 {/*-----------------------------------------NAME-------------------------------------------------------*/}
               <div className="div-container">
                 <label className=""><b>Name: </b></label>
@@ -238,9 +244,9 @@ function Create() {
                 />
                 {error.rating && <p className="error">{error.rating}</p>}
               </div>
-            </div>
+            {/* </div> */}
 {/*-------------------------------------------PLATFORMS-----------------------------------------------------*/}
-            <div>
+            {/* <div> */}
               <div className="div-container">
                 <label> <b>Platforms: </b> </label>
                 <select onChange={(e) => handleSelectPlatform(e)} className="in-select">
@@ -254,7 +260,7 @@ function Create() {
                   ))}
                 </select>
                 {form.platforms.map((plt) => (
-                  <div className="div-pg">
+                  <div key={plt} className="div-pg">
                     <div>{plt}</div>
                     <button
                       className="btn-select"
@@ -285,7 +291,7 @@ function Create() {
                   ))}
                 </select>
                 {form.genres.map((gen) => (
-                  <div className="div-pg">
+                  <div key={gen} className="div-pg">
                     <div>{gen}</div>
                     <button
                       className="btn-select"
@@ -314,7 +320,7 @@ function Create() {
                 {error.description && (
                   <p className="error">{error.description}</p>
                 )}
-            </div>
+            {/* </div> */}
           </div>
 {/*-----------------------------------------------BTN CREATE AND CANCEL-------------------------------------------------*/}
           <div className="div-btn">
