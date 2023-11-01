@@ -2,7 +2,9 @@ import React from 'react';
 import {Link} from 'react-router-dom';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { getVgByName } from '../../redux/actions';
+
+import { getVgByName,setPage } from '../../redux/actions';
+
 import './navbar.styles.css';
 
 function Navbar(){
@@ -19,6 +21,7 @@ function Navbar(){
         e.preventDefault();
         dispatch(getVgByName(name));
         setName('');
+        dispatch(setPage(1));
     }
 
     return (
