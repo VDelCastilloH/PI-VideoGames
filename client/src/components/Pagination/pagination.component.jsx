@@ -15,15 +15,15 @@ function Pagination () {
   console.log(pageNumbers);
   console.log(currentPage);
 
-  const prevPage = (currPage) => {
-    if(currPage>1){
-      setPage(currPage-1)
+  const prevPage = () => {
+    if(currentPage>1){
+      dispatch(setPage(currentPage-1))
     }
   }
 
-  const nextPage = (currPage) => {
-    if(currPage<pageNumbers.length-1){
-      setPage(currPage+1)
+  const nextPage = () => {
+    if(currentPage<pageNumbers.length){
+      dispatch(setPage(currentPage+1))
     }
   }
 
@@ -33,11 +33,14 @@ function Pagination () {
 
   return (
     <div className='btn-container'>
-      <button className='btn-page' key = {'prev'} onClick={() => prevPage(currentPage)}>Prev</button>
-      {pageNumbers.map((page) => (
-        <button className="btn-page" key={page} onClick={() => changePage(page)}>{page}</button>
-      ))}
-      <button className='btn-page' key = {'next'} onClick={() => nextPage(currentPage)}>Next</button>
+      <button className='btn-page' onClick={prevPage}>Prev</button>
+      {pageNumbers.map((page) => {if(page===currentPage){
+       return (<button className="btn-cpage" key={page} onClick={() => changePage(page)}>{page}</button>)
+      } else {
+       return (<button className="btn-page" key={page} onClick={() => changePage(page)}>{page}</button>)
+      } })}
+      <button className='btn-page' onClick={nextPage}>Next</button>
+      <label ></label>
     </div>
   );
 };
