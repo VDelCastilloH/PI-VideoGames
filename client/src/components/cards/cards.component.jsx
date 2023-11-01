@@ -43,8 +43,8 @@ function Cards(){
         dispatch(setPage(1));
         setOByName(e.target.value);
         setOByRating('default');
-        setFByGenre('All');
-        setFBySource('All');
+        // setFByGenre('All');
+        // setFBySource('All');
         dispatch(orderByName(e.target.value));
         setOrder(!order);
     }
@@ -53,8 +53,8 @@ function Cards(){
         dispatch(setPage(1));
         setOByName('default');
         setOByRating(e.target.value);
-        setFByGenre('All');
-        setFBySource('All');
+        // setFByGenre('All');
+        // setFBySource('All');
         dispatch(orderByRating(e.target.value));
         setOrder(!order);
     }
@@ -72,7 +72,7 @@ function Cards(){
         dispatch(setPage(1));
         setOByName('default');
         setOByRating('default');
-        setFByGenre('All');
+        // setFByGenre('All');
         setFBySource(e.target.value);
         dispatch(filterBySource(e.target.value));
     }
@@ -110,7 +110,7 @@ function Cards(){
                     <option value="API"> From API </option>
                 </select>
                 <button className="btn"
-                    onClick={(e) => handleAllVg(e)}><b>Reset Filters</b></button>
+                    onClick={(e) => handleAllVg(e)}><b>All Videogames</b></button>
             </div>
             <Pagination/>
             <div className="card-list">

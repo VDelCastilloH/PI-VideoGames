@@ -13,6 +13,8 @@ import { GET_VIDEOGAMES,
 const initialState = {
     allVideoGames:[],
     videogames:[],
+    prevFilter:[],
+    gamesByName:[],
     genres:[],
     detail:[],
     currentPage: 1,
@@ -25,12 +27,15 @@ const initialState = {
                 ...state, 
                 allVideoGames: action.payload,
                 videogames: action.payload,
+                prevFilter: action.payload,
+                gamesByName: action.payload, 
             };
             
         case GET_VG_BY_NAME:
             return{
                 ...state, 
                 videogames: action.payload,
+                gamesByName: action.payload,
             };
 
         case GET_DETAIL:
@@ -59,12 +64,12 @@ const initialState = {
         
         case ORDER_BY_NAME:     
             const vgOrdered = action.payload === "ASC"? 
-                state.allVideoGames.sort(function (a, b) {
+                state.videogames.sort(function (a, b) {
                 if (a.name.toLowerCase() > b.name.toLowerCase()) return 1;
                 if (b.name.toLowerCase() > a.name.toLowerCase()) return -1;
                 return 0; 
                 })
-            : state.allVideoGames.sort(function (a, b) {
+            : state.videogames.sort(function (a, b) {
                 if (a.name.toLowerCase() > b.name.toLowerCase()) return -1;
                 if (b.name.toLowerCase() > a.name.toLowerCase()) return 1;
                 return 0;
@@ -76,12 +81,12 @@ const initialState = {
 
         case ORDER_BY_RATING:
             const ratingOrdered = action.payload === 'MIN' ?
-            state.allVideoGames.sort((a,b) => {
+            state.videogames.sort((a,b) => {
                 if (a.rating > b.rating) return 1;
                 if (b.rating > a.rating) return -1;
                 return 0;
             })
-            : state.allVideoGames.sort((a, b) => {
+            : state.videogames.sort((a, b) => {
                 if (a.rating > b.rating) return -1;
                 if (b.rating > a.rating) return 1;
                 return 0;
@@ -89,30 +94,48 @@ const initialState = {
             return {
                 ...state,
                 videogames: ratingOrdered,
+                
             };
         
         case FILTER_BY_GENRE:
             const genre = action.payload
-            if(action.payload === "All") state.videogames = state.allVideoGames
+            if(action.payload === "All") state.videogames = state.gamesByName
             else {
-                state.videogames = state.allVideoGames.filter(vg => vg.genres?.includes(genre))
-                if(state.videogames.length === 0) {
-                alert(`😢 No video games were found with the selected genre.`)
-                state.videogames = state.allVideoGames
-                }
+                if(state.videogames.length<state.gamesByName.length)
+                    state.videogames = state.gamesByName;
+                let filter = state.videogames.filter(vg => vg.genres?.includes(genre))
+                state.videogames = filter
             }
             return {
                 ...state,
-                videogames: state.videogames
+                videogames: state.videogames,
+                prevFilter: state.videogames,
             }; 
 
         case FILTER_BY_SOURCE:
-            const Vg = state.allVideoGames;
-            const source = action.payload === 'DB' ? Vg.filter(vg => vg.createdDB)
-            : Vg.filter(vg => !vg.createdDB);
+            let Vg = state.videogames;
+            let source = [];
+            switch (action.payload) {
+                case "DB":
+                    if(Vg.length<state.prevFilter.length)
+                        Vg = state.prevFilter
+                    source = Vg.filter(vg => vg.createdDB)
+                    break;
+                case "API":
+                    if(Vg.length<state.prevFilter.length)
+                        Vg = state.prevFilter
+                    source = Vg.filter(vg => !vg.createdDB)
+                    break;
+                case "All":
+                    source = state.prevFilter
+                    break;
+                default:
+                    break;
+            }
+            
             return {
                 ...state,
-                videogames: action.payload === 'All' ? Vg : source
+                videogames: source,
             };
         
         case SET_PAGE:
