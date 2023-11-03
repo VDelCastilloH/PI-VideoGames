@@ -12,8 +12,8 @@ function Pagination () {
   // crea un array de números que representan los números de las páginas 
   const pageNumbers = Array.from({ length: totalPages }, (_, i) => i + 1); 
 
-  console.log(pageNumbers);
-  console.log(currentPage);
+  // console.log(pageNumbers);
+  // console.log(currentPage);
 
   const prevPage = () => {
     if(currentPage>1){

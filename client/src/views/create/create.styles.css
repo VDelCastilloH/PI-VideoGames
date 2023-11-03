@@ -100,3 +100,15 @@
     align-items: center;
     justify-content: center;
 }
+
+.btn:disabled{
+    border-radius: 10px;
+    background-color: #cacaca;
+    border-radius: 10px;
+    color: #050505;
+    padding: 10px 20px;
+    font-size: 15px;
+    border: none;
+    cursor: not-allowed;
+    margin: 5px;
+}
