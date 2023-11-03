@@ -13,8 +13,8 @@ import { GET_VIDEOGAMES,
         SET_PAGE } from './action-types';
         
 
-const URL_BASE_VG = "http://localhost:3001/videogames";
-const URL_BASE_GENRES = "http://localhost:3001/genres"
+const URL_BASE_VG = "/videogames";
+const URL_BASE_GENRES = "/genres"
 
 export function getVideogames(){
   return async function(dispatch){
